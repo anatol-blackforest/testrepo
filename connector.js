@@ -24,6 +24,6 @@ binance.on("l2snapshot", snapshot => {
         bids: snapshot.bids.slice(0, 3)
     };
     io.send(data)
- });
+});
    
 binance.subscribeLevel2Snapshots(market);
