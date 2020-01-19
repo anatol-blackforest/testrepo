@@ -7,8 +7,8 @@ jQuery(document).ready(function () {
         let asks = "";
         let bids = "";
 
-        result.asks.forEach((item, index, array) => asks += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
-        result.bids.forEach((item, index, array) => bids += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
+        result.asks.forEach((item, index, array) => asks += Math.round(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
+        result.bids.forEach((item, index, array) => bids += Math.round(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
 
         $('#binance #asks').empty()
         $('#binance #bids').empty()
@@ -23,8 +23,8 @@ jQuery(document).ready(function () {
         let asks = "";
         let bids = "";
 
-        result.asks.forEach((item, index, array) => asks += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
-        result.bids.forEach((item, index, array) => bids += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
+        result.asks.forEach((item, index, array) => asks += Math.round(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
+        result.bids.forEach((item, index, array) => bids += Math.round(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
 
         $('#zb #asks').empty()
         $('#zb #bids').empty()
