@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-const api = require('binance');
 const path = require('path');
 
 const ccxws = require("ccxws");
