@@ -6,9 +6,45 @@ const io = require('socket.io')(server);
 const api = require('binance');
 const path = require('path');
 
+const ccxws = require("ccxws");
+const binance = new ccxws.binance();
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 server.listen(3000, () => console.log(`It works!`));
+
+
+// market could be from CCXT or genearted by the user
+const market = {
+    id: "BTCUSDT", // remote_id used by the exchange
+    base: "BTC", // standardized base symbol for Bitcoin
+    quote: "USDT", // standardized quote symbol for Tether
+};
+   
+// handle level2 orderbook snapshots
+binance.on("l2snapshot", snapshot => {
+    data = {
+        asks: snapshot.asks.slice(0, 3),
+        bids: snapshot.bids.slice(0, 3)
+    };
+    console.log(data)
+    io.send(data)
+ });
+   
+// subscribe to level2 orderbook snapshots
+binance.subscribeLevel2Snapshots(market);
+
+
+
+
+
+
+
+
+
+
+
+
 
 // const binanceRest = new api.BinanceRest({
 //     key: 'api-key', // Get this from your account on binance.com
@@ -47,25 +83,25 @@ server.listen(3000, () => console.log(`It works!`));
  * the payload of each message received.  Each call to onXXXX returns the instance of the websocket
  * client if you want direct access(https://www.npmjs.com/package/ws).
  */
-const binanceWS = new api.BinanceWS(true); // Argument specifies whether the responses should be beautified, defaults to true
+// const binanceWS = new api.BinanceWS(true); // Argument specifies whether the responses should be beautified, defaults to true
  
-binanceWS.onDepthUpdate('BNBBTC', (data) => {
-    data = {
-        asks: data.bidDepthDelta.slice(0, 3),
-        bids: data.askDepthDelta.slice(0, 3)
-    };
+// binanceWS.onDepthUpdate('BNBBTC', (data) => {
+//     data = {
+//         asks: data.bidDepthDelta.slice(0, 3),
+//         bids: data.askDepthDelta.slice(0, 3)
+//     };
 
-    io.send(data)
+//     io.send(data)
     
-});
+// });
  
-binanceWS.onAggTrade('BNBBTC', (data) => {
-    // console.log(data);
-});
+// binanceWS.onAggTrade('BNBBTC', (data) => {
+//     // console.log(data);
+// });
  
-binanceWS.onKline('BNBBTC', '1m', (data) => {
-    // console.log(data);
-});
+// binanceWS.onKline('BNBBTC', '1m', (data) => {
+//     // console.log(data);
+// });
  
 /*
  * You can use one websocket for multiple streams.  There are also helpers for the stream names, but the

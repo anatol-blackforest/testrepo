@@ -8,8 +8,8 @@ jQuery(document).ready(function () {
         let asks = "";
         let bids = "";
 
-        result.asks.forEach((item, index, array) => asks += item.price + "<br />")
-        result.bids.forEach((item, index, array) => bids += item.price + "<br />")
+        result.asks.forEach((item, index, array) => asks += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
+        result.bids.forEach((item, index, array) => bids += Math.floor(item.price) + " / " + (+item.size).toFixed(1) + "<br />")
 
         $('#asks').empty()
         $('#bids').empty()
